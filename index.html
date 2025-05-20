@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tobch Heaven - Italian Pizza</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .pizza-card:hover .pizza-img {
+            transform: scale(1.05);
+        }
+        .cart-item-enter {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        .cart-item-enter-active {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 300ms ease-in;
+        }
+        .cart-item-exit {
+            opacity: 1;
+        }
+        .cart-item-exit-active {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 300ms ease-out;
+        }
+        .hero-pattern {
+            background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-red-600 text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-pizza-slice text-2xl"></i>
+                <span class="text-xl font-bold">Tobch Heaven</span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#home" class="hover:text-yellow-200 transition">Home</a>
+                <a href="#menu" class="hover:text-yellow-200 transition">Menu</a>
+                <a href="#about" class="hover:text-yellow-200 transition">About</a>
+                <a href="#contact" class="hover:text-yellow-200 transition">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="cart-toggle" class="relative">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-yellow-400 text-red-600 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">0</span>
+                </button>
+                <button class="md:hidden" id="mobile-menu-toggle">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-red-700 px-4 py-2">
+            <div class="flex flex-col space-y-3">
+                <a href="#home" class="hover:text-yellow-200 transition">Home</a>
+                <a href="#menu" class="hover:text-yellow-200 transition">Menu</a>
+                <a href="#about" class="hover:text-yellow-200 transition">About</a>
+                <a href="#contact" class="hover:text-yellow-200 transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-pattern bg-red-500 text-white py-20">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Italian Pizza Made With Love</h1>
+                <p class="text-xl mb-6">Handcrafted using traditional methods and the finest ingredients since 1985.</p>
+                <div class="flex space-x-4">
+                    <a href="#menu" class="bg-yellow-400 hover:bg-yellow-300 text-red-600 font-bold py-3 px-6 rounded-full transition">Order Now</a>
+                    <a href="#about" class="border-2 border-white hover:bg-white hover:text-red-600 font-bold py-3 px-6 rounded-full transition">Our Story</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Delicious Pizza" class="rounded-full w-80 h-80 md:w-96 md:h-96 object-cover shadow-2xl border-8 border-white">
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers -->
+    <section class="bg-yellow-50 py-10">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8 text-red-600">Today's Specials</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1381&q=80" alt="Special Pizza" class="w-full h-48 object-cover">
+                        <div class="absolute top-0 right-0 bg-red-600 text-white px-3 py-1 font-bold">-20%</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">Truffle Delight</h3>
+                        <p class="text-gray-600 mb-3">Black truffle, wild mushrooms, mozzarella, and truffle oil.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-red-600 font-bold">$15.99 <span class="text-gray-400 line-through text-sm">$19.99</span></span>
+                            <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-full text-sm">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80" alt="Special Pizza" class="w-full h-48 object-cover">
+                        <div class="absolute top-0 right-0 bg-red-600 text-white px-3 py-1 font-bold">BOGO</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">Pepperoni Feast</h3>
+                        <p class="text-gray-600 mb-3">Double pepperoni, mozzarella, and our signature tomato sauce.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-red-600 font-bold">Buy 1 Get 1 Free</span>
+                            <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-full text-sm">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1552539618-7eec9b4d1796?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Special Pizza" class="w-full h-48 object-cover">
+                        <div class="absolute top-0 right-0 bg-red-600 text-white px-3 py-1 font-bold">New!</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">Mediterranean</h3>
+                        <p class="text-gray-600 mb-3">Feta, olives, sun-dried tomatoes, artichokes, and fresh basil.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-red-600 font-bold">$14.99</span>
+                            <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-full text-sm">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-red-600">Our Menu</h2>
+            
+            <!-- Menu Filters -->
+            <div class="flex flex-wrap justify-center mb-8 gap-2">
+                <button class="filter-btn px-4 py-2 rounded-full bg-red-600 text-white" data-category="all">All Pizzas</button>
+                <button class="filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-red-600 hover:text-white transition" data-category="vegetarian">Vegetarian</button>
+                <button class="filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-red-600 hover:text-white transition" data-category="meat">Meat Lovers</button>
+                <button class="filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-red-600 hover:text-white transition" data-category="specialty">Specialty</button>
+            </div>
+            
+            <!-- Pizza Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="pizza-grid">
+                <!-- Pizza items will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                    <h2 class="text-3xl font-bold mb-6 text-red-600">Our Story</h2>
+                    <p class="mb-4 text-gray-700">Founded in 1985 by Italian immigrant Giovanni Rossi, Tobch Heaven began as a small family-owned pizzeria in the heart of the city. Giovanni brought with him generations-old recipes from Naples, the birthplace of pizza.</p>
+                    <p class="mb-4 text-gray-700">Today, we still use the same traditional methods - hand-stretched dough, slow-fermented for 48 hours, San Marzano tomatoes, and fresh mozzarella di bufala imported weekly from Italy.</p>
+                    <p class="text-gray-700">What sets us apart is our wood-fired oven that reaches 900°F, cooking our pizzas in just 90 seconds for that perfect char and crispiness that pizza lovers crave.</p>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://static.vecteezy.com/system/resources/previews/000/638/290/non_2x/vector-cartoon-pizza-chef.jpg" alt="Pizza Chef" class="rounded-lg shadow-md h-64 w-full object-cover">
+                        <img src="https://www.patioandpizza.com/cdn/shop/files/Pizzaioli_Traditional_Brick_Oven_1200x.jpg?v=1737230795" alt="Wood Fired Oven" class="rounded-lg shadow-md h-64 w-full object-cover">
+                        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Fresh Ingredients" class="rounded-lg shadow-md h-64 w-full object-cover">
+                        <img src="https://www.walksofitaly.com/blog/wp-content/uploads/2013/01/Pizza-03.jpg" alt="Pizza Making" class="rounded-lg shadow-md h-64 w-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Location -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-red-600">Find Us</h2>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold mb-4 text-red-600">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-red-600 mt-1 mr-3"></i>
+                                <p>157 26 July St, Marouf, Al Azbakeya, Cairo Governorate 4272150 <br>Egypt, Cairo</p>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-phone text-red-600 mr-3"></i>
+                                <p>01009077422</p>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope text-red-600 mr-3"></i>
+                                <p>ahmedtobch2002@gmail.com.com</p>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock text-red-600 mr-3"></i>
+                                <p>Mon-Thu: 11am - 10pm<br>Fri-Sat: 11am - 11pm<br>Sun: 12pm - 9pm</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 bg-gray-100 p-6 rounded-lg shadow-md">
+                        <h3 class="text-xl font-bold mb-4 text-red-600">Send Us a Message</h3>
+                        <form>
+                            <div class="mb-4">
+                                <label for="name" class="block text-gray-700 mb-2">Name</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-gray-700 mb-2">Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="block text-gray-700 mb-2">Message</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"></textarea>
+                            </div>
+                            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full transition">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="h-full rounded-lg overflow-hidden shadow-md">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.193789280189!2d31.226302!3d30.051688!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145840ab12d6c317%3A0x123456789abcdef!2s157%2026%20July%20St%2C%20Zamalek%2C%20Cairo!5e0!3m2!1sen!2seg!4v1716300000000"  width="600" height="450" style="border:0;"  allowfullscreen="" loading="lazy"  referrerpolicy="no-referrer-when-downgrade"> </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-yellow-400">Tobch Heaven</h3>
+                    <p class="mb-4">Italian pizza made with love since 1985.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white hover:text-yellow-400"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="hover:text-yellow-400 transition">Home</a></li>
+                        <li><a href="#menu" class="hover:text-yellow-400 transition">Menu</a></li>
+                        <li><a href="#about" class="hover:text-yellow-400 transition">About Us</a></li>
+                        <li><a href="#contact" class="hover:text-yellow-400 transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Information</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-yellow-400 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Refund Policy</a></li>
+                        <li><a href="#" class="hover:text-yellow-400 transition">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Newsletter</h3>
+                    <p class="mb-4">Subscribe to get updates on special offers and events.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg focus:outline-none text-gray-900 w-full">
+                        <button type="submit" class="bg-yellow-400 hover:bg-yellow-300 text-gray-900 px-4 py-2 rounded-r-lg font-bold"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Tobch Heaven. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Sidebar -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-red-600">Your Order</h3>
+                <button id="cart-close" class="text-gray-500 hover:text-red-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="cart-items" class="mb-6">
+                <!-- Cart items will be dynamically inserted here -->
+                <div id="empty-cart-message" class="text-center py-10">
+                    <i class="fas fa-shopping-cart text-4xl text-gray-300 mb-4"></i>
+                    <p class="text-gray-500">Your cart is empty</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-4 mb-4">
+                <div class="flex justify-between mb-2">
+                    <span class="font-semibold">Subtotal:</span>
+                    <span id="cart-subtotal">$0.00</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span class="font-semibold">Tax (8%):</span>
+                    <span id="cart-tax">$0.00</span>
+                </div>
+                <div class="flex justify-between text-lg font-bold">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <button id="checkout-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-full transition disabled:opacity-50" disabled>
+                    Proceed to Checkout
+                </button>
+                <button id="continue-shopping" class="w-full border-2 border-red-600 text-red-600 hover:bg-red-50 font-bold py-3 px-4 rounded-full transition">
+                    Continue Shopping
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="cart-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-red-600">Complete Your Order</h3>
+                    <button id="close-checkout" class="text-gray-500 hover:text-red-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <form id="checkout-form">
+                    <div class="mb-6">
+                        <h4 class="font-bold mb-3 text-gray-700">Delivery Information</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
+                                <input type="text" id="first-name" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                            </div>
+                            <div>
+                                <label for="last-name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                                <input type="text" id="last-name" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                            <input type="text" id="address" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div>
+                                <label for="city" class="block text-sm font-medium text-gray-700 mb-1">City</label>
+                                <input type="text" id="city" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                            </div>
+                            <div>
+                                <label for="state" class="block text-sm font-medium text-gray-700 mb-1">State</label>
+                                <input type="text" id="state" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                            </div>
+                            <div>
+                                <label for="zip" class="block text-sm font-medium text-gray-700 mb-1">ZIP Code</label>
+                                <input type="text" id="zip" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                            <input type="tel" id="phone" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                        </div>
+                        <div class="mb-4">
+                            <label for="delivery-time" class="block text-sm font-medium text-gray-700 mb-1">Delivery Time</label>
+                            <select id="delivery-time" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                                <option value="asap">As soon as possible</option>
+                                <option value="30">30 minutes</option>
+                                <option value="60">1 hour</option>
+                                <option value="90">1.5 hours</option>
+                                <option value="120">2 hours</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="instructions" class="block text-sm font-medium text-gray-700 mb-1">Special Instructions</label>
+                            <textarea id="instructions" rows="3" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h4 class="font-bold mb-3 text-gray-700">Payment Information</h4>
+                        <div class="mb-4">
+                            <label for="card-name" class="block text-sm font-medium text-gray-700 mb-1">Name on Card</label>
+                            <input type="text" id="card-name" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
+                        </div>
+                        <div class="mb-4">
+                            <label for="card-number" class="block text-sm font-medium text-gray-700 mb-1">Card Number</label>
+                            <input type="text" id="card-number" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="1234 5678 9012 3456">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                            <div>
+                                <label for="card-expiry" class="block text-sm font-medium text-gray-700 mb-1">Expiry Date</label>
+                                <input type="text" id="card-expiry" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="MM/YY">
+                            </div>
+                            <div>
+                                <label for="card-cvc" class="block text-sm font-medium text-gray-700 mb-1">CVC</label>
+                                <input type="text" id="card-cvc" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600" placeholder="123">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="place-order-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-full transition">
+                        Place Order
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Confirmation Modal -->
+    <div id="confirmation-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full">
+            <div class="p-6 text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+                    <i class="fas fa-check text-green-600"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Order Confirmed!</h3>
+                <p class="text-gray-500 mb-6">Your delicious pizza is on its way. Order #<span id="order-number">1542</span></p>
+                <div class="bg-gray-100 p-4 rounded-lg mb-6">
+                    <p class="font-semibold">Estimated delivery time:</p>
+                    <p id="delivery-estimate" class="text-red-600">30-40 minutes</p>
+                </div>
+                <button id="close-confirmation" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full transition">
+                    Back to Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Pizza data
+        const pizzas = [
+            {
+                id: 1,
+                name: "Margherita",
+                description: "Classic tomato sauce, fresh mozzarella, and basil",
+                price: 12.99,
+                category: "vegetarian",
+                image: "https://eu.ooni.com/cdn/shop/articles/20220211142754-margherita-9920_0483214a-7057-4277-9a3b-f2ab17c01e13.jpg?v=1737105958&width=1080"
+            },
+            {
+                id: 2,
+                name: "Pepperoni",
+                description: "Tomato sauce, mozzarella, and spicy pepperoni",
+                price: 14.99,
+                category: "meat",
+                image: "https://www.simplyrecipes.com/thmb/KE6iMblr3R2Db6oE8HdyVsFSj2A=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__09__easy-pepperoni-pizza-lead-3-1024x682-583b275444104ef189d693a64df625da.jpg"
+            },
+            {
+                id: 3,
+                name: "Vegetarian",
+                description: "Tomato sauce, mozzarella, bell peppers, mushrooms, and olives",
+                price: 13.99,
+                category: "vegetarian",
+                image: "https://kristineskitchenblog.com/wp-content/uploads/2024/12/veggie-pizza-recipe-09-2.jpg"
+            },
+            {
+                id: 4,
+                name: "Hawaiian",
+                description: "Tomato sauce, mozzarella, ham, and pineapple",
+                price: 15.99,
+                category: "meat",
+                image: "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+            },
+            {
+                id: 5,
+                name: "BBQ Chicken",
+                description: "BBQ sauce, mozzarella, grilled chicken, red onions, and cilantro",
+                price: 16.99,
+                category: "meat",
+                image: "https://thevirtualcaterer.com/wp-content/uploads/2024/05/BBQ-Chicken-Pizza-2-500x500.jpg"
+            },
+            {
+                id: 6,
+                name: "Four Cheese",
+                description: "Tomato sauce, mozzarella, gorgonzola, parmesan, and goat cheese",
+                price: 15.99,
+                category: "vegetarian",
+                image: "https://kitchenatics.com/wp-content/uploads/2020/09/Cheese-pizza-1.jpg"
+            },
+            {
+                id: 7,
+                name: "Meat Lovers",
+                description: "Tomato sauce, mozzarella, pepperoni, sausage, bacon, and ham",
+                price: 17.99,
+                category: "meat",
+                image: "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80"
+            },
+            {
+                id: 8,
+                name: "Truffle Mushroom",
+                description: "Truffle oil, mozzarella, wild mushrooms, and arugula",
+                price: 18.99,
+                category: "specialty",
+                image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1381&q=80"
+            },
+            {
+                id: 9,
+                name: "Buffalo Chicken",
+                description: "Buffalo sauce, mozzarella, grilled chicken, red onions, and ranch drizzle",
+                price: 16.99,
+                category: "specialty",
+                image: "https://images.unsplash.com/photo-1552539618-7eec9b4d1796?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80"
+            }
+        ];
+
+        // Cart functionality
+        let cart = [];
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartToggle = document.getElementById('cart-toggle');
+        const cartClose = document.getElementById('cart-close');
+        const continueShopping = document.getElementById('continue-shopping');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const checkoutModal = document.getElementById('checkout-modal');
+        const closeCheckout = document.getElementById('close-checkout');
+        const placeOrderBtn = document.getElementById('place-order-btn');
+        const confirmationModal = document.getElementById('confirmation-modal');
+        const closeConfirmation = document.getElementById('close-confirmation');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const pizzaGrid = document.getElementById('pizza-grid');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderPizzaMenu();
+            setupEventListeners();
+        });
+
+        // Render pizza menu
+        function renderPizzaMenu(filter = 'all') {
+            pizzaGrid.innerHTML = '';
+            
+            const filteredPizzas = filter === 'all' 
+                ? pizzas 
+                : pizzas.filter(pizza => pizza.category === filter);
+            
+            filteredPizzas.forEach(pizza => {
+                const pizzaCard = document.createElement('div');
+                pizzaCard.className = 'pizza-card bg-white rounded-lg shadow-md overflow-hidden transition hover:shadow-xl';
+                pizzaCard.innerHTML = `
+                    <div class="relative overflow-hidden">
+                        <img src="${pizza.image}" alt="${pizza.name}" class="pizza-img w-full h-48 object-cover transition duration-300">
+                        <div class="absolute bottom-0 left-0 bg-red-600 text-white px-3 py-1 font-bold">$${pizza.price.toFixed(2)}</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold mb-2">${pizza.name}</h3>
+                        <p class="text-gray-600 mb-4">${pizza.description}</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex space-x-1 text-yellow-400">
+                                ${Array(5).fill('<i class="fas fa-star"></i>').join('')}
+                            </div>
+                            <button class="add-to-cart bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full transition" data-id="${pizza.id}">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+                pizzaGrid.appendChild(pizzaCard);
+            });
+            
+            // Add event listeners to the new add to cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const pizzaId = parseInt(e.target.getAttribute('data-id'));
+                    addToCart(pizzaId);
+                });
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Cart toggle
+            cartToggle.addEventListener('click', toggleCart);
+            cartClose.addEventListener('click', toggleCart);
+            continueShopping.addEventListener('click', toggleCart);
+            cartOverlay.addEventListener('click', toggleCart);
+            
+            // Checkout
+            checkoutBtn.addEventListener('click', () => {
+                toggleCart();
+                checkoutModal.classList.remove('hidden');
+            });
+            
+            closeCheckout.addEventListener('click', () => {
+                checkoutModal.classList.add('hidden');
+            });
+            
+            // Place order
+            placeOrderBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                checkoutModal.classList.add('hidden');
+                
+                // Generate random order number
+                const orderNumber = Math.floor(Math.random() * 9000) + 1000;
+                document.getElementById('order-number').textContent = orderNumber;
+                
+                // Set delivery estimate based on selection
+                const deliveryTime = document.getElementById('delivery-time').value;
+                let estimate;
+                if (deliveryTime === 'asap') estimate = '25-35 minutes';
+                else if (deliveryTime === '30') estimate = '30-40 minutes';
+                else if (deliveryTime === '60') estimate = '60-70 minutes';
+                else if (deliveryTime === '90') estimate = '90-100 minutes';
+                else estimate = '2-2.5 hours';
+                
+                document.getElementById('delivery-estimate').textContent = estimate;
+                
+                // Show confirmation
+                confirmationModal.classList.remove('hidden');
+                
+                // Clear cart
+                cart = [];
+                updateCart();
+            });
+            
+            closeConfirmation.addEventListener('click', () => {
+                confirmationModal.classList.add('hidden');
+            });
+            
+            // Filter buttons
+            filterButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const category = e.target.getAttribute('data-category');
+                    
+                    // Update active button styling
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('bg-red-600', 'text-white');
+                        btn.classList.add('bg-gray-200', 'hover:bg-red-600', 'hover:text-white');
+                    });
+                    
+                    e.target.classList.remove('bg-gray-200', 'hover:bg-red-600', 'hover:text-white');
+                    e.target.classList.add('bg-red-600', 'text-white');
+                    
+                    renderPizzaMenu(category);
+                });
+            });
+            
+            // Mobile menu toggle
+            document.getElementById('mobile-menu-toggle').addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
+            });
+        }
+
+        // Toggle cart visibility
+        function toggleCart() {
+            cartSidebar.classList.toggle('translate-x-full');
+            cartOverlay.classList.toggle('hidden');
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        // Add item to cart
+        function addToCart(pizzaId) {
+            const pizza = pizzas.find(p => p.id === pizzaId);
+            
+            // Check if pizza already in cart
+            const existingItem = cart.find(item => item.id === pizzaId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: pizza.id,
+                    name: pizza.name,
+                    price: pizza.price,
+                    quantity: 1
+                });
+            }
+            
+            updateCart();
+            
+            // Show cart briefly
+            if (cartSidebar.classList.contains('translate-x-full')) {
+                toggleCart();
+                setTimeout(toggleCart, 2000);
+            }
+        }
+
+        // Update cart display
+        function updateCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartSubtotal = document.getElementById('cart-subtotal');
+            const cartTax = document.getElementById('cart-tax');
+            const cartTotal = document.getElementById('cart-total');
+            
+            // Update cart count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Clear existing items
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                emptyCartMessage.classList.remove('hidden');
+                checkoutBtn.disabled = true;
+            } else {
+                emptyCartMessage.classList.add('hidden');
+                checkoutBtn.disabled = false;
+                
+                // Add each item to cart
+                cart.forEach(item => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item flex justify-between items-center py-4 border-b border-gray-200';
+                    cartItem.innerHTML = `
+                        <div>
+                            <h4 class="font-semibold">${item.name}</h4>
+                            <p class="text-gray-600 text-sm">$${item.price.toFixed(2)} each</p>
+                        </div>
+                        <div class="flex items-center">
+                            <button class="decrease-quantity text-red-600 px-2" data-id="${item.id}">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="mx-2">${item.quantity}</span>
+                            <button class="increase-quantity text-red-600 px-2" data-id="${item.id}">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <span class="ml-4 font-semibold">$${(item.price * item.quantity).toFixed(2)}</span>
+                            <button class="remove-item text-gray-400 hover:text-red-600 ml-2" data-id="${item.id}">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                });
+                
+                // Add event listeners to quantity buttons
+                document.querySelectorAll('.decrease-quantity').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        updateQuantity(id, -1);
+                    });
+                });
+                
+                document.querySelectorAll('.increase-quantity').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        updateQuantity(id, 1);
+                    });
+                });
+                
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = parseInt(e.target.closest('button').getAttribute('data-id'));
+                        removeFromCart(id);
+                    });
+                });
+            }
+            
+            // Calculate totals
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = subtotal * 0.08;
+            const total = subtotal + tax;
+            
+            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+            cartTax.textContent = `$${tax.toFixed(2)}`;
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Update item quantity
+        function updateQuantity(pizzaId, change) {
+            const itemIndex = cart.findIndex(item => item.id === pizzaId);
+            
+            if (itemIndex !== -1) {
+                cart[itemIndex].quantity += change;
+                
+                // Remove if quantity reaches 0
+                if (cart[itemIndex].quantity <= 0) {
+                    cart.splice(itemIndex, 1);
+                }
+                
+                updateCart();
+            }
+        }
+
+        // Remove item from cart
+        function removeFromCart(pizzaId) {
+            cart = cart.filter(item => item.id !== pizzaId);
+            updateCart();
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!document.getElementById('mobile-menu').classList.contains('hidden')) {
+                        document.getElementById('mobile-menu').classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
