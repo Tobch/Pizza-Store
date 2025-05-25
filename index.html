@@ -32,10 +32,44 @@
             background-size: 20px 20px;
         }
     </style>
+
+    <!-- Performance optimizations -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    
+    <!-- Critical CSS inline -->
+    <style>
+        /* Critical rendering path styles */
+        :root {
+            --primary: #dc2626;
+            --secondary: #facc15;
+        }
+        .critical-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        /* Add loading skeleton styles */
+        .skeleton {
+            background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+    </style>
+
+    <!-- Lazy load non-critical CSS -->
+    <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <meta name="description" content="Authentic Italian pizza in Cairo. Order fresh, handmade pizzas with premium ingredients. Fast delivery & great prices at Tobch Heaven.">
+    <meta name="keywords" content="pizza delivery cairo, italian restaurant, tobch heaven, authentic pizza, pizza near me">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tobchheaven.com">
+    <meta property="og:image" content="https://tobchheaven.com/images/social-share.jpg">
+    <link rel="canonical" href="https://tobchheaven.com">
 </head>
 <body class="bg-gray-50 font-sans">
     <!-- Navigation -->
-    <nav class="bg-red-600 text-white shadow-lg sticky top-0 z-50">
+    <nav role="navigation" aria-label="Main navigation" class="bg-red-600 text-white shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center space-x-2">
                 <i class="fas fa-pizza-slice text-2xl"></i>
@@ -85,56 +119,63 @@
         </div>
     </section>
 
-    <!-- Special Offers -->
-    <section class="bg-yellow-50 py-10">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-8 text-red-600">Today's Specials</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1381&q=80" alt="Special Pizza" class="w-full h-48 object-cover">
-                        <div class="absolute top-0 right-0 bg-red-600 text-white px-3 py-1 font-bold">-20%</div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="text-xl font-bold mb-2">Truffle Delight</h3>
-                        <p class="text-gray-600 mb-3">Black truffle, wild mushrooms, mozzarella, and truffle oil.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-red-600 font-bold">$15.99 <span class="text-gray-400 line-through text-sm">$19.99</span></span>
-                            <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-full text-sm">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1376&q=80" alt="Special Pizza" class="w-full h-48 object-cover">
-                        <div class="absolute top-0 right-0 bg-red-600 text-white px-3 py-1 font-bold">BOGO</div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="text-xl font-bold mb-2">Pepperoni Feast</h3>
-                        <p class="text-gray-600 mb-3">Double pepperoni, mozzarella, and our signature tomato sauce.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-red-600 font-bold">Buy 1 Get 1 Free</span>
-                            <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-full text-sm">Add to Cart</button>
-                        </div>
+<!-- special offers -->
+<section class="bg-yellow-50 py-10">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8 text-red-600">Today's Specials</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            
+            <!-- First special -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1381&q=80" 
+                     alt="Truffle Mushroom Pizza" 
+                     class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-lg font-bold mb-2">Truffle Mushroom Special</h3>
+                    <p class="text-gray-600 mb-3">Premium truffle oil and wild mushrooms</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-red-600 font-bold">$15.99 <span class="text-gray-400 line-through text-sm">$19.99</span></span>
+                        <button class="add-to-cart bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-full text-sm" 
+                                data-id="8">Add to Cart</button>
                     </div>
                 </div>
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                    <div class="relative">
-                        <img src="https://images.unsplash.com/photo-1552539618-7eec9b4d1796?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Special Pizza" class="w-full h-48 object-cover">
-                        <div class="absolute top-0 right-0 bg-red-600 text-white px-3 py-1 font-bold">New!</div>
+            </div>
+
+            <!-- Second special -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://www.simplyrecipes.com/thmb/KE6iMblr3R2Db6oE8HdyVsFSj2A=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2019__09__easy-pepperoni-pizza-lead-3-1024x682-583b275444104ef189d693a64df625da.jpg" 
+                     alt="Pepperoni Pizza" 
+                     class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-lg font-bold mb-2">Pepperoni Deal</h3>
+                    <p class="text-gray-600 mb-3">Buy 1 Get 1 Free</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-red-600 font-bold">Buy 1 Get 1 Free</span>
+                        <button class="add-to-cart bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-full text-sm"
+                                data-id="2">Add to Cart</button>
                     </div>
-                    <div class="p-4">
-                        <h3 class="text-xl font-bold mb-2">Mediterranean</h3>
-                        <p class="text-gray-600 mb-3">Feta, olives, sun-dried tomatoes, artichokes, and fresh basil.</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-red-600 font-bold">$14.99</span>
-                            <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-full text-sm">Add to Cart</button>
-                        </div>
+                </div>
+            </div>
+
+            <!-- Third special -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <img src="https://kristineskitchenblog.com/wp-content/uploads/2024/12/veggie-pizza-recipe-09-2.jpg" 
+                     alt="Vegetarian Pizza" 
+                     class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h3 class="text-lg font-bold mb-2">Veggie Special</h3>
+                    <p class="text-gray-600 mb-3">Fresh vegetables and premium cheese</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-red-600 font-bold">$14.99</span>
+                        <button class="add-to-cart bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-full text-sm"
+                                data-id="3">Add to Cart</button>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Menu Section -->
     <section id="menu" class="py-16 bg-white">
@@ -207,7 +248,7 @@
                     </div>
                     <div class="mt-6 bg-gray-100 p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-bold mb-4 text-red-600">Send Us a Message</h3>
-                        <form>
+                        <form id="contact-form">
                             <div class="mb-4">
                                 <label for="name" class="block text-gray-700 mb-2">Name</label>
                                 <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600">
@@ -437,6 +478,11 @@
         </div>
     </div>
 
+    <!-- Add skip link for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only">
+        Skip to main content
+    </a>
+
     <script>
         // Pizza data
         const pizzas = [
@@ -531,10 +577,126 @@
         const pizzaGrid = document.getElementById('pizza-grid');
         const filterButtons = document.querySelectorAll('.filter-btn');
 
+        // Error handling object
+        const ErrorHandling = {
+            showError: (message, element) => {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'text-red-600 text-sm mt-1 error-message';
+                errorDiv.setAttribute('role', 'alert');
+                errorDiv.textContent = message;
+                element.parentNode.appendChild(errorDiv);
+                element.setAttribute('aria-invalid', 'true');
+            },
+
+            clearErrors: () => {
+                document.querySelectorAll('.error-message').forEach(el => el.remove());
+                document.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
+            },
+
+            validateForm: (formData) => {
+                const errors = [];
+                // Add comprehensive form validation
+                if (!/^[A-Za-z\s]{2,30}$/.test(formData.name)) {
+                    errors.push({ field: 'name', message: 'Please enter a valid name' });
+                }
+                if (!/^\+?[\d\s-]{10,}$/.test(formData.phone)) {
+                    errors.push({ field: 'phone', message: 'Please enter a valid phone number' });
+                }
+                return errors;
+            }
+        };
+
+        const FormValidator = {
+            rules: {
+                email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                phone: /^\+?[\d\s-]{10,}$/,
+                creditCard: /^\d{4}\s?\d{4}\s?\d{4}\s?\d{4}$/,
+                expiry: /^(0[1-9]|1[0-2])\/([0-9]{2})$/,
+                cvc: /^\d{3,4}$/
+            },
+
+            validate(form) {
+                const errors = [];
+                
+                // Required fields
+                form.querySelectorAll('[required]').forEach(field => {
+                    if (!field.value.trim()) {
+                        errors.push({
+                            field: field.id,
+                            message: `${field.labels[0]?.textContent || 'Field'} is required`
+                        });
+                    }
+                });
+
+                // Email validation
+                const emailField = form.querySelector('#email');
+                if (emailField && !this.rules.email.test(emailField.value)) {
+                    errors.push({
+                        field: 'email',
+                        message: 'Please enter a valid email address'
+                    });
+                }
+
+                // Phone validation
+                const phoneField = form.querySelector('#phone');
+                if (phoneField && !this.rules.phone.test(phoneField.value)) {
+                    errors.push({
+                        field: 'phone',
+                        message: 'Please enter a valid phone number'
+                    });
+                }
+
+                return errors;
+            }
+        };
+
+        const PaymentProcessor = {
+            async processPayment(paymentDetails) {
+                try {
+                    // Simulated payment processing
+                    const response = await fetch('/api/process-payment', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(paymentDetails)
+                    });
+
+                    if (!response.ok) throw new Error('Payment failed');
+                    return await response.json();
+                } catch (error) {
+                    console.error('Payment error:', error);
+                    throw error;
+                }
+            },
+
+            validateCardDetails(cardNumber, expiry, cvc) {
+                return {
+                    isValid: FormValidator.rules.creditCard.test(cardNumber) &&
+                            FormValidator.rules.expiry.test(expiry) &&
+                            FormValidator.rules.cvc.test(cvc),
+                    errors: []
+                };
+            }
+        };
+
         // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
+            // Existing initializations
             renderPizzaMenu();
-            setupEventListeners();
+            setupEventListeners(); // This will now handle all add-to-cart buttons
+            
+            // New initializations
+            ErrorBoundary.init();
+            PerformanceOptimizer.init();
+            Analytics.init();
+            
+            // Register service worker
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => console.log('ServiceWorker registered'))
+                    .catch(error => console.error('ServiceWorker error:', error));
+            }
         });
 
         // Render pizza menu
@@ -560,7 +722,12 @@
                             <div class="flex space-x-1 text-yellow-400">
                                 ${Array(5).fill('<i class="fas fa-star"></i>').join('')}
                             </div>
-                            <button class="add-to-cart bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full transition" data-id="${pizza.id}">
+                            <button 
+                                aria-label="Add ${pizza.name} to cart"
+                                class="add-to-cart bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full transition" 
+                                role="button"
+                                data-id="${pizza.id}"
+                            >
                                 Add to Cart
                             </button>
                         </div>
@@ -568,87 +735,33 @@
                 `;
                 pizzaGrid.appendChild(pizzaCard);
             });
-            
-            // Add event listeners to the new add to cart buttons
-            document.querySelectorAll('.add-to-cart').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const pizzaId = parseInt(e.target.getAttribute('data-id'));
-                    addToCart(pizzaId);
-                });
-            });
         }
 
         // Setup event listeners
         function setupEventListeners() {
+            // Remove existing event listeners first
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.replaceWith(button.cloneNode(true));
+            });
+            
             // Cart toggle
             cartToggle.addEventListener('click', toggleCart);
             cartClose.addEventListener('click', toggleCart);
             continueShopping.addEventListener('click', toggleCart);
             cartOverlay.addEventListener('click', toggleCart);
             
-            // Checkout
-            checkoutBtn.addEventListener('click', () => {
-                toggleCart();
-                checkoutModal.classList.remove('hidden');
-            });
-            
-            closeCheckout.addEventListener('click', () => {
-                checkoutModal.classList.add('hidden');
-            });
-            
-            // Place order
-            placeOrderBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                checkoutModal.classList.add('hidden');
-                
-                // Generate random order number
-                const orderNumber = Math.floor(Math.random() * 9000) + 1000;
-                document.getElementById('order-number').textContent = orderNumber;
-                
-                // Set delivery estimate based on selection
-                const deliveryTime = document.getElementById('delivery-time').value;
-                let estimate;
-                if (deliveryTime === 'asap') estimate = '25-35 minutes';
-                else if (deliveryTime === '30') estimate = '30-40 minutes';
-                else if (deliveryTime === '60') estimate = '60-70 minutes';
-                else if (deliveryTime === '90') estimate = '90-100 minutes';
-                else estimate = '2-2.5 hours';
-                
-                document.getElementById('delivery-estimate').textContent = estimate;
-                
-                // Show confirmation
-                confirmationModal.classList.remove('hidden');
-                
-                // Clear cart
-                cart = [];
-                updateCart();
-            });
-            
-            closeConfirmation.addEventListener('click', () => {
-                confirmationModal.classList.add('hidden');
-            });
-            
-            // Filter buttons
-            filterButtons.forEach(button => {
+            // Add to cart buttons (including specials)
+            document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', (e) => {
-                    const category = e.target.getAttribute('data-category');
+                    const pizzaId = parseInt(e.currentTarget.getAttribute('data-id'));
+                    addToCart(pizzaId);
                     
-                    // Update active button styling
-                    filterButtons.forEach(btn => {
-                        btn.classList.remove('bg-red-600', 'text-white');
-                        btn.classList.add('bg-gray-200', 'hover:bg-red-600', 'hover:text-white');
-                    });
-                    
-                    e.target.classList.remove('bg-gray-200', 'hover:bg-red-600', 'hover:text-white');
-                    e.target.classList.add('bg-red-600', 'text-white');
-                    
-                    renderPizzaMenu(category);
+                    // Analytics tracking
+                    const pizza = pizzas.find(p => p.id === pizzaId);
+                    if (pizza) {
+                        Analytics.trackEvent('Cart', 'Add Item', pizza.name);
+                    }
                 });
-            });
-            
-            // Mobile menu toggle
-            document.getElementById('mobile-menu-toggle').addEventListener('click', () => {
-                document.getElementById('mobile-menu').classList.toggle('hidden');
             });
         }
 
@@ -810,6 +923,196 @@
                 }
             });
         });
+
+                    // Add to script section
+            const LazyLoader = {
+                observer: new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src;
+                            img.classList.remove('skeleton');
+                            LazyLoader.observer.unobserve(img);
+                        }
+                    });
+                }),
+
+                init: () => {
+                    document.querySelectorAll('img[data-src]').forEach(img => {
+                        img.classList.add('skeleton');
+                        LazyLoader.observer.observe(img);
+                    });
+                }
+            };
+
+                            // Add to script section
+                const FeatureManager = {
+                    initializeAnalytics() {
+                        // Add Google Analytics or custom analytics
+                    },
+
+                    enablePWASupport() {
+                        if ('serviceWorker' in navigator) {
+                            navigator.serviceWorker.register('/sw.js');
+                        }
+                    },
+
+                    setupPushNotifications() {
+                        // Implementation for push notifications
+                    },
+
+                    initializePaymentMethods() {
+                        // Setup multiple payment gateways
+                    }
+                };
+
+                // Add offline support with service worker
+
+
+                                // Add to script section
+                const PerformanceMonitor = {
+                    metrics: {},
+
+                    measure(name, startMark, endMark) {
+                        performance.mark(endMark);
+                        performance.measure(name, startMark, endMark);
+                        this.metrics[name] = performance.getEntriesByName(name)[0].duration;
+                    },
+
+                    logMetrics() {
+                        console.table(this.metrics);
+                    }
+                };
+
+        // Add to script section
+        const CartManager = {
+            items: [],
+            
+            init() {
+                this.loadFromLocalStorage();
+                this.setupEventListeners();
+            },
+
+            addItem(item) {
+                const existingItem = this.items.find(i => i.id === item.id);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    this.items.push({ ...item, quantity: 1 });
+                }
+                this.saveToLocalStorage();
+                this.updateUI();
+                this.showNotification('Item added to cart');
+            },
+
+            showNotification(message) {
+                const notification = document.createElement('div');
+                notification.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300';
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                setTimeout(() => notification.remove(), 3000);
+            }
+        };
+
+        const Analytics = {
+    init() {
+        // Google Analytics initialization
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-Z5Z8E60PWC');
+
+        this.setupEventTracking();
+    },
+
+    trackEvent(category, action, label) {
+        if (typeof gtag !== 'undefined') {
+            gtag('event', action, {
+                'event_category': category,
+                'event_label': label
+            });
+        }
+    },
+
+    setupEventTracking() {
+        // Track add to cart events
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const pizzaId = button.getAttribute('data-id');
+                const pizza = pizzas.find(p => p.id === parseInt(pizzaId));
+                this.trackEvent('Cart', 'Add Item', pizza.name);
+            });
+        });
+    }
+};
+
+        const ErrorBoundary = {
+    init() {
+        window.onerror = (msg, url, lineNo, columnNo, error) => {
+            this.handleError(error);
+            return false;
+        };
+
+        window.addEventListener('unhandledrejection', event => {
+            this.handleError(event.reason);
+        });
+    },
+
+    handleError(error) {
+        console.error('Application error:', error);
+        this.showErrorMessage();
+    },
+
+    showErrorMessage() {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg';
+        errorDiv.textContent = 'Something went wrong. Please try again.';
+        document.body.appendChild(errorDiv);
+        setTimeout(() => errorDiv.remove(), 5000);
+    }
+};
+
+        const PerformanceOptimizer = {
+    init() {
+        this.setupLazyLoading();
+        this.setupImageOptimization();
+        this.measurePerformance();
+    },
+
+    setupLazyLoading() {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.dataset.src) {
+                        entry.target.src = entry.target.dataset.src;
+                        observer.unobserve(entry.target);
+                    }
+                }
+            });
+        });
+
+        document.querySelectorAll('img[data-src]').forEach(img => observer.observe(img));
+    },
+
+    setupImageOptimization() {
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('error', () => {
+                img.src = '/images/fallback.jpg';
+            });
+        });
+    },
+
+    measurePerformance() {
+        // Record key metrics
+        if (window.performance) {
+            window.addEventListener('load', () => {
+                const timing = window.performance.timing;
+                const loadTime = timing.loadEventEnd - timing.navigationStart;
+                console.log(`Page load time: ${loadTime}ms`);
+            });
+        }
+    }
+};
     </script>
 </body>
 </html>
